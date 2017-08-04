@@ -1,0 +1,10 @@
+locale: en_US.UTF-8
+
+php:
+    version: 7.1
+
+apps:
+    - name: gerald
+      user: www-data
+      group: www-data
+      domain: gerald.dev

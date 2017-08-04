@@ -1,0 +1,14 @@
+---
+# valid for all hosts provisioned inside this vagrant instance
+- hosts: all
+  # become replaces sudo since ansible v.1.9
+  become: true
+  # roles to be executed
+  roles:
+    - general
+    - php
+    - geerlingguy.composer
+    - geerlingguy.java
+    - geerlingguy.elasticsearch
+    - nginx
+    - mongodb

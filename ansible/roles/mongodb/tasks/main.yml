@@ -1,0 +1,9 @@
+- name: install mongodb
+  apt: name=mongodb state=latest
+
+- name: Render mongodb config
+  template: src=config.j2 dest=/etc/systemd/system/mongodb.service
+
+- name: restart mongodb
+  service: name=mongodb state=restarted
+

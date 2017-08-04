@@ -1,0 +1,21 @@
+- name: add php ppa
+  apt_repository: repo='ppa:ondrej/php' state=present
+
+- name: install php requirements for Gerald
+  apt: name=php{{ php.version }}-{{ item }} state=present
+  with_items:
+    - json
+    - xml
+    - mbstring
+    - intl
+    - opcache
+    - mongodb
+    - xdebug
+    - apcu
+    - pdo
+
+- name: install php{{ php.version }}-fpm
+  apt: name=php{{ php.version }}-fpm state=present
+
+- name: restart php-fpm
+  service: name=php{{ php.version }}-fpm state=restarted
