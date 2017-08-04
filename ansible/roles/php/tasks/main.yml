@@ -13,6 +13,7 @@
     - xdebug
     - apcu
     - pdo
+    - zip
 
 - name: install php{{ php.version }}-fpm
   apt: name=php{{ php.version }}-fpm state=present
