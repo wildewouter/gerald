@@ -1,9 +1,9 @@
-- name: install mongodb
-  apt: name=mongodb state=latest
+- name: Add Mongo packages repo
+  apt_key: id=0C49F3730359A14518585931BC711F9BA15703C6  keyserver=keyserver.ubuntu.com
+- name: add repo itself
+  apt_repository: repo='deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse' state=present
+- name: install packages
+  apt: pkg=mongodb-org state=present
 
-- name: Render mongodb config
-  template: src=config.j2 dest=/etc/systemd/system/mongodb.service
-
-- name: restart mongodb
-  service: name=mongodb state=restarted
-
+- name: Start mongod
+  service: name=mongod state=started

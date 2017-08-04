@@ -6,9 +6,9 @@
   # roles to be executed
   roles:
     - general
+    - mongodb
     - php
     - geerlingguy.composer
     - geerlingguy.java
     - geerlingguy.elasticsearch
     - nginx
-    - mongodb
