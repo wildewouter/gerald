@@ -20,7 +20,7 @@ Vagrant.configure(2) do |config|
 
     config.vm.provider "virtualbox" do |v|
         # tell virtualbox to give our machine 1 GB RAM and 2 Cores
-        v.memory = 1024
+        v.memory = 2048
         v.cpus = 2
     end
 end
