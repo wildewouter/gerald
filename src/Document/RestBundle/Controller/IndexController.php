@@ -16,6 +16,10 @@ final class IndexController extends Controller
      */
     public function showAction()
     {
+        $documentRepo = $this->get('document.repository');
+        $documentRepo->save(null);
+die;
+
         return new Response('Hello World');
     }
 

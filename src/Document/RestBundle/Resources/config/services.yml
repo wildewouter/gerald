@@ -3,3 +3,15 @@ services:
 #        class: RestBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
 
+  document.repository:
+    class: Document\Domain\DocumentRepository
+    alias: document.repository.mongo
+
+  document.repository.mongo:
+    class: Document\Bridge\MongoDB\DocumentRepository
+    arguments:
+      - "@mongo.client"
+
+  mongo.client:
+    class: MongoDB\Client
+    factory: [Document\Bridge\MongoDB\MongoClientFactory, getClient]

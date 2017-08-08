@@ -21,7 +21,7 @@ final class DocumentRepository implements DomainRepository
         // TODO: Implement getDocumentsForId() method.
     }
 
-    public function save(Document $document): bool
+    public function save(Document $document): DocumentId
     {
         // TODO: Implement save() method.
     }
