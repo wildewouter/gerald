@@ -6,3 +6,4 @@ document:
     resource: '@RestBundle/Controller/'
     type: annotation
     prefix: /document
+

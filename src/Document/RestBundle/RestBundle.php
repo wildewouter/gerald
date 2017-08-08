@@ -1,6 +1,6 @@
 <?php
 
-namespace RestBundle;
+namespace Document\RestBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
