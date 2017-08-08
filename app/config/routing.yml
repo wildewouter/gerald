@@ -1,3 +1,8 @@
-app:
+main:
+    resource: "@MainBundle/Controller/"
+    type:     annotation
+
+document:
     resource: '@RestBundle/Controller/'
     type: annotation
+    prefix: /document
