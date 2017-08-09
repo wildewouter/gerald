@@ -4,7 +4,7 @@ namespace Document\Domain;
 
 use Ramsey\Uuid\Uuid;
 
-final class DocumentId
+final class FileId
 {
     /**
      * @var string
@@ -16,12 +16,12 @@ final class DocumentId
         $this->id = $id;
     }
 
-    public static function createNew(): DocumentId
+    public static function createNew(): FileId
     {
         return new self(Uuid::uuid4());
     }
 
-    public static function fromString(string $id): DocumentId
+    public static function fromString(string $id): FileId
     {
         return new self($id);
     }

@@ -11,5 +11,5 @@ interface DocumentRepository
 
     public function getDocumentsForId(DocumentId $id): Document;
 
-    public function save(Document $document): DocumentId;
+    public function save(Document $document): Document;
 }

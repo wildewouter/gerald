@@ -3,19 +3,30 @@
 namespace Document\Bridge\MongoDB;
 
 use Document\Domain\Document;
+use Document\Domain\DocumentFileStorage;
 use Document\Domain\DocumentId;
 use Document\Domain\DocumentRepository as DomainRepository;
-use MongoDB\Client;
+use Document\Domain\DocumentStorageFailedException;
+use MongoDB\Collection;
+use MongoDB\Database;
 
 final class DocumentRepository implements DomainRepository
 {
+    /**
+     * @var Collection
+     */
     private $documentCollection;
 
-    public function __construct(Client $client)
+    /**
+     * @var DocumentFileStorage
+     */
+    private $documentFileStorage;
+
+    public function __construct(Database $database, DocumentFileStorage $documentFileStorage)
     {
-        $this->documentCollection = $client
-            ->selectDatabase('kifid')
+        $this->documentCollection  = $database
             ->selectCollection('documents');
+        $this->documentFileStorage = $documentFileStorage;
     }
 
     /**
@@ -31,10 +42,14 @@ final class DocumentRepository implements DomainRepository
 
     }
 
-    public function save(Document $document = null): DocumentId
+    public function save(Document $document = null): Document
     {
-        dump($this->documentCollection->find()->toArray());die;
-        dump($this->documentCollection->insertOne(['data' => ['somedata']]));
-        die;
+        $result = $this->documentCollection->insertOne($document->toArray());
+
+        if (! $result->isAcknowledged()) {
+            throw new DocumentStorageFailedException();
+        }
+
+        return $document;
     }
 }

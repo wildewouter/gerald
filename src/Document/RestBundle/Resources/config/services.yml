@@ -1,17 +1,37 @@
 services:
-#    main.example:
-#        class: RestBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
 
+  ####### Domain interface services wiring #######
   document.repository:
     class: Document\Domain\DocumentRepository
     alias: document.repository.mongo
 
+  document.filestorage:
+    class: Document\Domain\DocumentFileStorage
+    alias: document.filestorage.flysystem
+
+
+  ####### Implemented services wiring #######
   document.repository.mongo:
     class: Document\Bridge\MongoDB\DocumentRepository
     arguments:
-      - "@mongo.client"
+      - "@mongo.database"
+      - "@document.filestorage"
 
-  mongo.client:
-    class: MongoDB\Client
+  document.filestorage.flysystem:
+    class: Document\Bridge\FlySystem\DocumentFileStorage
+    arguments:
+      - "@flysystem.client.local"
+
+
+  ####### Client factories #######
+  mongo.database:
+    class: MongoDB\Database
     factory: [Document\Bridge\MongoDB\MongoClientFactory, getClient]
+    arguments:
+      - "%database_name%"
+
+  flysystem.client.local:
+    class: League\Flysystem\Filesystem
+    factory: [Document\Bridge\FlySystem\FlySystemClientFactory, getLocalClient]
+    arguments:
+      - "%storage_root%"

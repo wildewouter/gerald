@@ -18,7 +18,7 @@ final class IndexController extends Controller
     {
         $documentRepo = $this->get('document.repository');
         $documentRepo->save(null);
-die;
+        die;
 
         return new Response('Hello World');
     }

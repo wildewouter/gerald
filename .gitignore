@@ -10,6 +10,7 @@ composer.lock
 /var/cache/*
 !var/cache/.gitkeep
 !/var/logs
+!/var/files
 /var/logs/*
 !var/logs/.gitkeep
 !/var/sessions
