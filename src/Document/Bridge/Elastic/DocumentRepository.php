@@ -5,13 +5,14 @@ namespace Document\Bridge\Elastic;
 use Document\Domain\Document;
 use Document\Domain\DocumentId;
 use Document\Domain\DocumentRepository as DomainRepository;
+use Document\Domain\Documents;
 
 final class DocumentRepository implements DomainRepository
 {
     /**
-     * @return Document[]
+     * @return Documents
      */
-    public function getAllDocuments(): array
+    public function getAllDocuments(): Documents
     {
         // TODO: Implement getAllDocuments() method.
     }

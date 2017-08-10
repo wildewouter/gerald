@@ -10,20 +10,20 @@ final class Document implements Storable
     private $id;
 
     /**
-     * @var File
+     * @var FileData
      */
-    private $file;
+    private $fileData;
 
     /**
      * @var array
      */
     private $meta;
 
-    public function __construct(DocumentId $id, File $file, array $meta)
+    public function __construct(DocumentId $id, FileData $fileData, array $meta)
     {
-        $this->id   = $id;
-        $this->file = $file;
-        $this->meta = $meta;
+        $this->id       = $id;
+        $this->fileData = $fileData;
+        $this->meta     = $meta;
     }
 
     public function id(): DocumentId
@@ -31,9 +31,9 @@ final class Document implements Storable
         return $this->id;
     }
 
-    public function file(): File
+    public function fileData(): FileData
     {
-        return $this->file;
+        return $this->fileData;
     }
 
     public function meta(): array
@@ -46,7 +46,12 @@ final class Document implements Storable
         return [
             'id'       => (string) $this->id,
             'meta'     => $this->meta,
-            'fileName' => (string) $this->file->id(),
+            'fileData' => $this->fileData->toArray(),
         ];
+    }
+
+    public function __toString()
+    {
+        return json_encode($this->toArray());
     }
 }

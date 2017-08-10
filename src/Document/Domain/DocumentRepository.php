@@ -5,9 +5,9 @@ namespace Document\Domain;
 interface DocumentRepository
 {
     /**
-     * @return Document[]
+     * @return Documents
      */
-    public function getAllDocuments(): array;
+    public function getAllDocuments(): Documents;
 
     public function getDocumentsForId(DocumentId $id): Document;
 

@@ -6,9 +6,13 @@ use Document\Domain\Document;
 use Document\Domain\DocumentFileStorage;
 use Document\Domain\DocumentId;
 use Document\Domain\DocumentRepository as DomainRepository;
+use Document\Domain\Documents;
 use Document\Domain\DocumentStorageFailedException;
+use Document\Domain\FileData;
+use Document\Domain\FileId;
 use MongoDB\Collection;
 use MongoDB\Database;
+use MongoDB\Model\BSONDocument;
 
 final class DocumentRepository implements DomainRepository
 {
@@ -30,16 +34,16 @@ final class DocumentRepository implements DomainRepository
     }
 
     /**
-     * @return Document[]
+     * @return Documents
      */
-    public function getAllDocuments(): array
+    public function getAllDocuments(): Documents
     {
-
+        return $this->mapMongoDocumentsToDocuments($this->documentCollection->find());
     }
 
     public function getDocumentsForId(DocumentId $id): Document
     {
-
+        return $this->mapMongoDocumentsToDocuments($this->documentCollection->find(['id' => (string) $id]));
     }
 
     public function save(Document $document = null): Document
@@ -51,5 +55,30 @@ final class DocumentRepository implements DomainRepository
         }
 
         return $document;
+    }
+
+
+    private function mapMongoDocumentsToDocuments($mongoDocuments)
+    {
+        $documentCollection = Documents::empty();
+
+        /** @var BSONDocument $mongoDocument */
+        foreach ($mongoDocuments as $mongoDocument) {
+            $fileData = new FileData(
+                FileId::fromString($mongoDocument->fileData->id),
+                $mongoDocument->fileData->mime_type,
+                $mongoDocument->fileData->extension
+            );
+
+            $document = new Document(
+                DocumentId::fromString($mongoDocument->id),
+                $fileData,
+                $mongoDocument->meta->getArrayCopy()
+            );
+
+            $documentCollection = $documentCollection->add($document);
+        }
+
+        return $documentCollection;
     }
 }

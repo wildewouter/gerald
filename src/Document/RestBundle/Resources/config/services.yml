@@ -26,7 +26,7 @@ services:
   ####### Client factories #######
   mongo.database:
     class: MongoDB\Database
-    factory: [Document\Bridge\MongoDB\MongoClientFactory, getClient]
+    factory: [Document\Bridge\MongoDB\MongoDatabaseFactory, getClient]
     arguments:
       - "%database_name%"
 
