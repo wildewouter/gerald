@@ -9,7 +9,7 @@ interface DocumentRepository
      */
     public function getAllDocuments(): Documents;
 
-    public function getDocumentsForId(DocumentId $id): Document;
+    public function getDocumentById(DocumentId $id): Document;
 
     public function save(Document $document): Document;
 }

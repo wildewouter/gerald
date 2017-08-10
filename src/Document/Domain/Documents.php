@@ -42,6 +42,11 @@ final class Documents implements \IteratorAggregate
         return $documentArray;
     }
 
+    public function first(): Document
+    {
+        return reset($this->documents);
+    }
+
     /**
      * Retrieve an external iterator
      * @link http://php.net/manual/en/iteratoraggregate.getiterator.php

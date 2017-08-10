@@ -35,3 +35,9 @@ services:
     factory: [Document\Bridge\FlySystem\FlySystemClientFactory, getLocalClient]
     arguments:
       - "%storage_root%"
+
+  ####### Param Converters #######
+  converter.document.id:
+    class: Document\RestBundle\ParamConverter\DocumentIdParamConverter
+    tags:
+      - { name: request.param_converter}

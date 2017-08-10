@@ -41,9 +41,11 @@ final class DocumentRepository implements DomainRepository
         return $this->mapMongoDocumentsToDocuments($this->documentCollection->find());
     }
 
-    public function getDocumentsForId(DocumentId $id): Document
+    public function getDocumentById(DocumentId $id): Document
     {
-        return $this->mapMongoDocumentsToDocuments($this->documentCollection->find(['id' => (string) $id]));
+        $documents = $this->mapMongoDocumentsToDocuments($this->documentCollection->find(['id' => (string) $id]));
+
+        return $documents->first();
     }
 
     public function save(Document $document = null): Document

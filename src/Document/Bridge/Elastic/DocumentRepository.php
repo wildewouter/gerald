@@ -17,7 +17,7 @@ final class DocumentRepository implements DomainRepository
         // TODO: Implement getAllDocuments() method.
     }
 
-    public function getDocumentsForId(DocumentId $id): Document
+    public function getDocumentById(DocumentId $id): Document
     {
         // TODO: Implement getDocumentsForId() method.
     }
