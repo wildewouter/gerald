@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 final class CreateController extends Controller
 {
     /**
-     * @Route("/", name="document.create")
+     * @Route("/", name="document.rest.create")
      * @Method("POST")
      *
      * @param Request $request
@@ -29,7 +29,8 @@ final class CreateController extends Controller
 
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get('file');
-        $meta = json_decode($request->get('meta', '[]'), true);
+        $meta = json_decode($request->get('meta', '{}'), true);
+        $this->ensureMetaIsString($meta);
 
         $fileData = new FileData(
             FileId::createNew(),
@@ -42,6 +43,12 @@ final class CreateController extends Controller
         $documentRepository->save($document);
 
         return new JsonResponse($document->toArray(), 201);
+    }
 
+    private function ensureMetaIsString(&$meta)
+    {
+        foreach ($meta as $key => $value) {
+            $meta[$key] = (string) $value;
+        }
     }
 }

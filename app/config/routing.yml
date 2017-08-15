@@ -2,8 +2,29 @@ main:
     resource: "@MainBundle/Controller/"
     type:     annotation
 
-document:
-    resource: '@RestBundle/Controller/'
+document.search:
+    resource: '@RestBundle/Controller/SearchController.php'
     type: annotation
     prefix: /document
+
+document.index:
+    resource: '@RestBundle/Controller/IndexController.php'
+    type: annotation
+    prefix: /document
+
+document.create:
+    resource: '@RestBundle/Controller/CreateController.php'
+    type: annotation
+    prefix: /document
+
+document.delete:
+    resource: '@RestBundle/Controller/DeleteController.php'
+    type: annotation
+    prefix: /document
+
+document.update:
+    resource: '@RestBundle/Controller/UpdateController.php'
+    type: annotation
+    prefix: /document
+
 

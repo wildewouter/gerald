@@ -50,6 +50,11 @@ final class Document implements Storable
         ];
     }
 
+    public function equals(Document $document): bool
+    {
+        return $document->toArray() === $this->toArray();
+    }
+
     public function __toString()
     {
         return json_encode($this->toArray());

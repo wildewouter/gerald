@@ -7,9 +7,13 @@ interface DocumentRepository
     /**
      * @return Documents
      */
-    public function getAllDocuments(): Documents;
+    public function findAll(): Documents;
 
-    public function getDocumentById(DocumentId $id): Document;
+    public function findById(DocumentId $id): Document;
 
     public function save(Document $document): Document;
+
+    public function delete(DocumentId $id);
+
+    public function search(DocumentSearch $search): Documents;
 }

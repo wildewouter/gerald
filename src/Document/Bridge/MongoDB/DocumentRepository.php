@@ -7,6 +7,7 @@ use Document\Domain\DocumentFileStorage;
 use Document\Domain\DocumentId;
 use Document\Domain\DocumentRepository as DomainRepository;
 use Document\Domain\Documents;
+use Document\Domain\DocumentSearch;
 use Document\Domain\DocumentStorageFailedException;
 use Document\Domain\FileData;
 use Document\Domain\FileId;
@@ -36,12 +37,12 @@ final class DocumentRepository implements DomainRepository
     /**
      * @return Documents
      */
-    public function getAllDocuments(): Documents
+    public function findAll(): Documents
     {
         return $this->mapMongoDocumentsToDocuments($this->documentCollection->find());
     }
 
-    public function getDocumentById(DocumentId $id): Document
+    public function findById(DocumentId $id): Document
     {
         $documents = $this->mapMongoDocumentsToDocuments($this->documentCollection->find(['id' => (string) $id]));
 
@@ -59,8 +60,21 @@ final class DocumentRepository implements DomainRepository
         return $document;
     }
 
+    public function delete(DocumentId $id)
+    {
+        // TODO: Implement delete() method.
+    }
 
-    private function mapMongoDocumentsToDocuments($mongoDocuments)
+    public function search(DocumentSearch $search): Documents
+    {
+        $result = $this->mapMongoDocumentsToDocuments(
+            $this->documentCollection->find($search->flattenedMetaSearch())->toArray()
+        );
+
+        return $result;
+    }
+
+    private function mapMongoDocumentsToDocuments($mongoDocuments): Documents
     {
         $documentCollection = Documents::empty();
 

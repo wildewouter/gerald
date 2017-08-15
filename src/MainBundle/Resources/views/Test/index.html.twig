@@ -41,17 +41,17 @@
         <div class="row">
             <div class="col-md-4">
                 <h2>Create</h2>
-                <form method="post" action="{{ path('document.create') }}" enctype="multipart/form-data">
+                <form method="post" action="{{ path('document.rest.create') }}" enctype="multipart/form-data">
                     <input type="file" name="file" id="file">
                     <p>JSON meta:</p>
-                    {#<textarea title="meta" cols=40 rows=10 name="meta"></textarea>#}
+                    <textarea title="meta" cols=40 rows=10 name="meta"></textarea>
                     <button type="submit">Go</button>
                 </form>
             </div>
             <div class="col-md-4">
                 <h2>Update</h2>
                 <p>Not yet working</p>
-                <form method="post" action="{{ path('document.create') }}">
+                <form method="post" action="{{ path('document.rest.create') }}">
                     <input type="file" name="file" id="file">
                     <p>JSON meta:</p>
                     <textarea title="meta" cols=40 rows=10 name="meta"></textarea>
