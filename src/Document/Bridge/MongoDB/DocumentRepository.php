@@ -2,6 +2,7 @@
 
 namespace Document\Bridge\MongoDB;
 
+use Document\Bridge\Gerald\Flattener;
 use Document\Domain\Document;
 use Document\Domain\DocumentFileStorage;
 use Document\Domain\DocumentId;
@@ -49,7 +50,7 @@ final class DocumentRepository implements DomainRepository
         return $documents->first();
     }
 
-    public function save(Document $document = null): Document
+    public function save(Document $document): Document
     {
         $result = $this->documentCollection->insertOne($document->toArray());
 
@@ -65,10 +66,25 @@ final class DocumentRepository implements DomainRepository
         // TODO: Implement delete() method.
     }
 
-    public function search(DocumentSearch $search): Documents
+    public function search(DocumentSearch $search, int $offset = 0, int $limit = 100, string $sort = null, string $order = 'asc'): Documents
     {
+        $order = $this->convertToSortingInteger($order);
+
+        if ($sort) {
+            $sort = ['meta.' . $sort => $order];
+        }
+
         $result = $this->mapMongoDocumentsToDocuments(
-            $this->documentCollection->find($search->flattenedMetaSearch())->toArray()
+            $this->documentCollection
+                ->find(
+                    $search->flattenedMetaSearch(),
+                    [
+                        'skip'  => $offset,
+                        'limit' => $limit,
+                        'sort'  => $sort,
+                    ]
+                )
+                ->toArray()
         );
 
         return $result;
@@ -96,5 +112,16 @@ final class DocumentRepository implements DomainRepository
         }
 
         return $documentCollection;
+    }
+
+    private function convertToSortingInteger(string $order): int
+    {
+        switch (mb_strtolower($order)) {
+            case 'desc':
+                return -1;
+            case 'asc':
+            default:
+                return 1;
+        }
     }
 }

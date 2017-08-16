@@ -25,7 +25,12 @@ final class SearchController extends Controller
 
         $documentRepository = $this->get('document.repository');
 
-        $result = $documentRepository->search($documentSearch);
+        $offset = (int) $request->get('offset', 0);
+        $limit  = (int) $request->get('limit', 100);
+        $sort   = $request->get('sort', null);
+        $order  = $request->get('order', 'asc');
+
+        $result = $documentRepository->search($documentSearch, $offset, $limit, $sort, $order);
 
         return new JsonResponse($result->toArray());
     }

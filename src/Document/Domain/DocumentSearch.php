@@ -2,6 +2,7 @@
 
 namespace Document\Domain;
 
+use Document\Bridge\Gerald\Flattener;
 use InvalidArgumentException;
 use Traversable;
 
@@ -42,7 +43,7 @@ final class DocumentSearch implements \IteratorAggregate
         }
 
         $metaArray = ['meta' => $searchArray];
-        $this->flatten($metaArray);
+        Flattener::flatten($metaArray);
 
         return $metaArray;
     }
@@ -69,24 +70,6 @@ final class DocumentSearch implements \IteratorAggregate
         if (! $documentSearchQuery instanceof DocumentSearchQuery) {
             throw new InvalidArgumentException(
                 get_class($documentSearchQuery) . ' should be ' . DocumentSearchQuery::class);
-        }
-    }
-
-    private function flatten(array &$list, array $subnode = null, $path = null)
-    {
-        if (null === $subnode) {
-            $subnode = &$list;
-        }
-        foreach ($subnode as $key => $value) {
-            if (is_array($value)) {
-                $nodePath = $path ? $path.'.'.$key : $key;
-                $this->flatten($list, $value, $nodePath);
-                if (null === $path) {
-                    unset($list[$key]);
-                }
-            } elseif (null !== $path) {
-                $list[$path.'.'.$key] = $value;
-            }
         }
     }
 }
