@@ -45,4 +45,9 @@ final class FileData implements Storable
     {
         return $this->id . '.' . $this->extension;
     }
+
+    public function mimeType()
+    {
+        return $this->mimeType;
+    }
 }

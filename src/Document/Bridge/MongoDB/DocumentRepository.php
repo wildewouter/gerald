@@ -6,6 +6,7 @@ use Document\Bridge\Gerald\Flattener;
 use Document\Domain\Document;
 use Document\Domain\DocumentFileStorage;
 use Document\Domain\DocumentId;
+use Document\Domain\DocumentNotFoundException;
 use Document\Domain\DocumentRepository as DomainRepository;
 use Document\Domain\Documents;
 use Document\Domain\DocumentSearch;
@@ -46,6 +47,10 @@ final class DocumentRepository implements DomainRepository
     public function findById(DocumentId $id): Document
     {
         $documents = $this->mapMongoDocumentsToDocuments($this->documentCollection->find(['id' => (string) $id]));
+
+        if ($documents->isEmpty()) {
+            throw new DocumentNotFoundException();
+        }
 
         return $documents->first();
     }
@@ -88,6 +93,24 @@ final class DocumentRepository implements DomainRepository
         );
 
         return $result;
+    }
+
+    public function findByFileName(string $fileName): Document
+    {
+        $documents = $this->mapMongoDocumentsToDocuments(
+            $this->documentCollection
+                ->find(
+                    ['fileData.name' => $fileName],
+                    ['limit' => 1]
+                )
+                ->toArray()
+        );
+
+        if ($documents->isEmpty()) {
+            throw new DocumentNotFoundException();
+        }
+
+        return $documents->first();
     }
 
     private function mapMongoDocumentsToDocuments($mongoDocuments): Documents

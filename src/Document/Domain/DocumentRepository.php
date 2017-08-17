@@ -9,7 +9,21 @@ interface DocumentRepository
      */
     public function findAll(): Documents;
 
+    /**
+     * @param DocumentId $id
+     * @return Document
+     *
+     * @throws DocumentNotFoundException
+     */
     public function findById(DocumentId $id): Document;
+
+    /**
+     * @param string $fileName
+     * @return Document
+     *
+     * @throws DocumentNotFoundException
+     */
+    public function findByFileName(string $fileName): Document;
 
     public function save(Document $document): Document;
 

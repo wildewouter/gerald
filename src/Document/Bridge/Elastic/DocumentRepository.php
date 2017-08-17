@@ -37,4 +37,9 @@ final class DocumentRepository implements DomainRepository
     {
         // TODO: Implement search() method.
     }
+
+    public function findByFileName(string $fileName): Document
+    {
+        // TODO: Implement findByFileName() method.
+    }
 }

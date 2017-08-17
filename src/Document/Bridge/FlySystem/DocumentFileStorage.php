@@ -4,7 +4,6 @@ namespace Document\Bridge\FlySystem;
 
 use Document\Domain\DocumentFileStorage as DomainFileStorage;
 use Document\Domain\FileData;
-use Document\Domain\FileId;
 use League\Flysystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -27,8 +26,8 @@ final class DocumentFileStorage implements DomainFileStorage
         fclose($stream);
     }
 
-    public function get(FileId $fileId): FileData
+    public function get(string $fileName)
     {
-//        return $this->filesystem->readStream($fileId);
+        return $this->filesystem->readStream($fileName);
     }
 }

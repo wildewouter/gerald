@@ -4,27 +4,30 @@ main:
 
 document.search:
     resource: '@RestBundle/Controller/SearchController.php'
-    type: annotation
-    prefix: /document
+    type:     annotation
+    prefix:   /document
 
 document.index:
     resource: '@RestBundle/Controller/IndexController.php'
-    type: annotation
-    prefix: /document
+    type:     annotation
+    prefix:   /document
 
 document.create:
     resource: '@RestBundle/Controller/CreateController.php'
-    type: annotation
-    prefix: /document
+    type:     annotation
+    prefix:   /document
 
 document.delete:
     resource: '@RestBundle/Controller/DeleteController.php'
-    type: annotation
-    prefix: /document
+    type:     annotation
+    prefix:   /document
 
 document.update:
     resource: '@RestBundle/Controller/UpdateController.php'
-    type: annotation
-    prefix: /document
+    type:     annotation
+    prefix:   /document
 
-
+document.file:
+    resource: "@FileBundle/Controller"
+    type:     annotation
+    prefix:   /document

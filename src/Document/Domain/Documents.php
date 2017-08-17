@@ -47,6 +47,11 @@ final class Documents implements \IteratorAggregate
         return reset($this->documents);
     }
 
+    public function isEmpty()
+    {
+        return count($this->documents) === 0;
+    }
+
     /**
      * Retrieve an external iterator
      * @link http://php.net/manual/en/iteratoraggregate.getiterator.php

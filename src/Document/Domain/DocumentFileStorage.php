@@ -8,5 +8,9 @@ interface DocumentFileStorage
 {
     public function store(FileData $fileData, File $file);
 
-    public function get(FileId $fileId): FileData;
+    /**
+     * @param string $fileName
+     * @return resource
+     */
+    public function get(string $fileName);
 }
