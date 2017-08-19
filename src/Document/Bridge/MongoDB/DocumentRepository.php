@@ -3,7 +3,6 @@
 namespace Document\Bridge\MongoDB;
 
 use DateTimeImmutable;
-use Document\Bridge\Gerald\Flattener;
 use Document\Domain\Document;
 use Document\Domain\DocumentFileStorage;
 use Document\Domain\DocumentId;
