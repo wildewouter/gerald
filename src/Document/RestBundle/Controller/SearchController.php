@@ -4,6 +4,7 @@ namespace Document\RestBundle\Controller;
 
 use Document\Domain\DocumentSearch;
 use Document\Domain\DocumentSearchQuery;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,6 +16,18 @@ final class SearchController extends Controller
     /**
      * @Route("/search/", name="document.rest.search")
      * @Method("GET")
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Create a new document",
+     *  parameters={
+     *      {"name"="q", "dataType"="string", "required"=false, "description"="The search query in JSON Format ({'DocumentSpecialName':'Name'})"},
+     *      {"name"="offset", "dataType"="integer", "required"=false, "description"="Offset of the search"},
+     *      {"name"="limit", "dataType"="integer", "required"=false, "description"="Limit of the search"},
+     *      {"name"="sort", "dataType"="string", "required"=false, "description"="The item to sort the search on"},
+     *      {"name"="order", "dataType"="string", "required"=false, "description"="ASC or DESC"}
+     *  }
+     * )
      *
      * @param Request $request
      * @return JsonResponse

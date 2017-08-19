@@ -7,6 +7,7 @@ use Document\Domain\Document;
 use Document\Domain\DocumentId;
 use Document\Domain\FileData;
 use Document\Domain\FileId;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,6 +22,15 @@ final class CreateController extends Controller
     /**
      * @Route("/", name="document.rest.create")
      * @Method("POST")
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Create a new document",
+     *  parameters={
+     *      {"name"="file", "dataType"="file", "format"="binary", "required"=true, "description"="File to store"},
+     *      {"name"="meta", "dataType"="string", "format"="json", "required"=true, "description"="The given meta data for the file as a json object"}
+     *  }
+     * )
      *
      * @param Request $request
      * @return JsonResponse

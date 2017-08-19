@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Document\RestBundle\RestBundle(),
             new Document\FileBundle\FileBundle(),
             new MainBundle\MainBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

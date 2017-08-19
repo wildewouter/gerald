@@ -3,6 +3,7 @@
 namespace Document\RestBundle\Controller;
 
 use Document\Domain\Document;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,6 +14,19 @@ final class DeleteController extends Controller
     /**
      * @Route("/{documentId}/", name="document.rest.delete")
      * @Method("DELETE")
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Delete a document",
+     *  requirements={
+     *      {
+     *          "name"="documentId",
+     *          "dataType"="string",
+     *          "requirement"="\w+",
+     *          "description"="ID of the requested document"
+     *      }
+     *  },
+     * )
      *
      * @param Document $document
      * @return Response
