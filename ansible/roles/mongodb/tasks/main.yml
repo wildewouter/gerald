@@ -7,3 +7,7 @@
 
 - name: Start mongod
   service: name=mongod state=started
+
+- name: Ensure mongo launches on boot
+  become: yes
+  command: systemctl enable mongod.service
