@@ -1,4 +1,7 @@
-gerald
+Gerald
 ======
 
-A Symfony project created on August 3, 2017, 2:24 pm.
+Gerald is a storage service for documents with any given meta data.
+It runs as a headless REST api.
+
+It is also the weird ass sealion from Disney's Finding Dory (name derivative)
