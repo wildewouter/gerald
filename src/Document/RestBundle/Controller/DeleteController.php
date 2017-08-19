@@ -21,7 +21,7 @@ final class DeleteController extends Controller
     {
         $documentRepository = $this->get('document.repository');
 
-        $documentRepository->delete($document->id());
+        $documentRepository->delete($document);
 
         return new Response('', Response::HTTP_NO_CONTENT);
     }

@@ -30,18 +30,25 @@ final class Document implements Storable
      */
     private $updatedDate;
 
+    /**
+     * @var DateTimeImmutable
+     */
+    private $deletedDate;
+
     public function __construct(
         DocumentId $id,
         FileData $fileData,
         array $meta,
         DateTimeImmutable $createdDate,
-        DateTimeImmutable $updatedDate = null
+        DateTimeImmutable $updatedDate = null,
+        DateTimeImmutable $deletedDate = null
     ) {
         $this->id          = $id;
         $this->fileData    = $fileData;
         $this->meta        = $meta;
         $this->createdDate = $createdDate;
         $this->updatedDate = $updatedDate;
+        $this->deletedDate = $deletedDate;
     }
 
     public function id(): DocumentId
@@ -72,6 +79,14 @@ final class Document implements Storable
         return $this->updatedDate;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function deletedDate()
+    {
+        return $this->deletedDate;
+    }
+
     public function equals(Document $document): bool
     {
         return $document->toArray() === $this->toArray();
@@ -88,6 +103,10 @@ final class Document implements Storable
 
         if ($this->updatedDate) {
             $documentArray['updated'] = $this->updatedDate->format('Y-m-d H:i:s');
+        }
+
+        if ($this->deletedDate) {
+            $documentArray['deleted'] = $this->deletedDate->format('Y-m-d H:i:s');
         }
 
         return $documentArray;

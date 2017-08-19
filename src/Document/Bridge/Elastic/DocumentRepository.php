@@ -28,7 +28,7 @@ final class DocumentRepository implements DomainRepository
         // TODO: Implement save() method.
     }
 
-    public function delete(DocumentId $id)
+    public function delete(Document $document, $soft = true)
     {
         // TODO: Implement delete() method.
     }

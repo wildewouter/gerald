@@ -67,12 +67,25 @@ final class DocumentRepository implements DomainRepository
         return $document;
     }
 
-    public function delete(DocumentId $id)
+    public function delete(Document $document, $soft = true)
     {
-        $result = $this->documentCollection->deleteOne(['id' => (string) $id]);
+        $result = $this->documentCollection->deleteOne(['id' => (string) $document->id()]);
 
         if (! $result->isAcknowledged()) {
             throw new DocumentStorageFailedException();
+        }
+
+        if ($soft) {
+            $document = new Document(
+                $document->id(),
+                $document->fileData(),
+                $document->meta(),
+                $document->createdDate(),
+                $document->updatedDate(),
+                new DateTimeImmutable('now')
+            );
+
+            $this->save($document);
         }
     }
 
@@ -124,6 +137,10 @@ final class DocumentRepository implements DomainRepository
 
         /** @var BSONDocument $mongoDocument */
         foreach ($mongoDocuments as $mongoDocument) {
+            if ($mongoDocument->deleted ?? false) {
+                continue;
+            }
+
             $fileData = new FileData(
                 FileId::fromString($mongoDocument->fileData->id),
                 $mongoDocument->fileData->mime_type,

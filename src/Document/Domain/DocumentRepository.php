@@ -27,7 +27,7 @@ interface DocumentRepository
 
     public function save(Document $document): Document;
 
-    public function delete(DocumentId $id);
+    public function delete(Document $document, $soft = true);
 
     public function search(DocumentSearch $search, int $offset = 0, int $limit = 100, string $sort = null, string $order = 'asc'): Documents;
 }

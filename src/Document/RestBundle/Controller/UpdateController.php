@@ -31,7 +31,7 @@ final class UpdateController extends Controller
         $id                 = $document->id();
         $documentRepository = $this->get('document.repository');
 
-        $documentRepository->delete($id);
+        $documentRepository->delete($id, false);
 
         $document = new Document(
             $id,
