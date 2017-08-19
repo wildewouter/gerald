@@ -2,6 +2,7 @@
 
 namespace Document\RestBundle\Controller;
 
+use DateTimeImmutable;
 use Document\Domain\Document;
 use Document\Domain\DocumentId;
 use Document\Domain\FileData;
@@ -12,6 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class CreateController extends Controller
 {
@@ -24,11 +27,11 @@ final class CreateController extends Controller
      */
     public function createAction(Request $request)
     {
-        $documentRepository = $this->get('document.repository');
+        $documentRepository  = $this->get('document.repository');
         $documentFileStorage = $this->get('document.filestorage');
 
-        /** @var UploadedFile $uploadedFile */
-        $uploadedFile = $request->files->get('file');
+        $uploadedFile = $this->getFileFromRequest($request);
+
         $meta = json_decode($request->get('meta', '{}'), true);
         $this->ensureMetaIsString($meta);
 
@@ -37,12 +40,30 @@ final class CreateController extends Controller
             $uploadedFile->getMimeType(),
             $uploadedFile->getClientOriginalExtension()
         );
-        $document = new Document(DocumentId::createNew(), $fileData, $meta);
+        $document = new Document(DocumentId::createNew(), $fileData, $meta, new DateTimeImmutable('now'));
 
         $documentFileStorage->store($fileData, $uploadedFile);
         $documentRepository->save($document);
 
         return new JsonResponse($document->toArray(), 201);
+    }
+
+    /**
+     * @param Request $request
+     * @return UploadedFile
+     *
+     * @throws BadRequestHttpException
+     */
+    private function getFileFromRequest(Request $request): UploadedFile
+    {
+        /** @var UploadedFile $uploadedFile */
+        $uploadedFile = $request->files->get('file');
+
+        if (! $uploadedFile) {
+            throw new BadRequestHttpException();
+        }
+
+        return $uploadedFile;
     }
 
     private function ensureMetaIsString(&$meta)

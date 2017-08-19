@@ -2,13 +2,26 @@
 
 namespace Document\RestBundle\ParamConverter;
 
+use Document\Domain\Document;
 use Document\Domain\DocumentId;
+use Document\Domain\DocumentRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class DocumentIdParamConverter implements ParamConverterInterface
+final class DocumentParamConverter implements ParamConverterInterface
 {
+    /**
+     * @var DocumentRepository
+     */
+    private $documentRepository;
+
+    public function __construct(DocumentRepository $documentRepository)
+    {
+        $this->documentRepository = $documentRepository;
+    }
+
     /**
      * Stores the object in the request.
      *
@@ -19,13 +32,19 @@ final class DocumentIdParamConverter implements ParamConverterInterface
      */
     public function apply(Request $request, ParamConverter $configuration)
     {
-        $id = $request->attributes->get('id', null);
+        $id = $request->attributes->get('documentId', null);
 
         if ($id === null) {
             return false;
         }
 
-        $request->attributes->set('id', DocumentId::fromString($id));
+        $document = $this->documentRepository->findById(DocumentId::fromString($id));
+
+        if (! $document) {
+            throw new NotFoundHttpException();
+        }
+
+        $request->attributes->set('document', $document);
 
         return true;
     }
@@ -39,6 +58,6 @@ final class DocumentIdParamConverter implements ParamConverterInterface
      */
     public function supports(ParamConverter $configuration)
     {
-        return $configuration->getClass() === DocumentId::class;
+        return $configuration->getClass() === Document::class;
     }
 }

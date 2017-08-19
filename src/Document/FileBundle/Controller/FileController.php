@@ -28,8 +28,7 @@ final class FileController extends Controller
 
         $response = new StreamedResponse(function () use ($fileHandle) {
             while (! feof($fileHandle)) {
-                $buffer = fread($fileHandle, 1024);
-                echo $buffer;
+                echo fread($fileHandle, 1024);
                 flush();
             }
             fclose($fileHandle);

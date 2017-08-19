@@ -38,6 +38,8 @@ services:
 
   ####### Param Converters #######
   converter.document.id:
-    class: Document\RestBundle\ParamConverter\DocumentIdParamConverter
+    class: Document\RestBundle\ParamConverter\DocumentParamConverter
+    arguments:
+      - "@document.repository"
     tags:
       - { name: request.param_converter}

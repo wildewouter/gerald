@@ -2,6 +2,7 @@
 
 namespace Document\Bridge\MongoDB;
 
+use DateTimeImmutable;
 use Document\Bridge\Gerald\Flattener;
 use Document\Domain\Document;
 use Document\Domain\DocumentFileStorage;
@@ -68,7 +69,11 @@ final class DocumentRepository implements DomainRepository
 
     public function delete(DocumentId $id)
     {
-        // TODO: Implement delete() method.
+        $result = $this->documentCollection->deleteOne(['id' => (string) $id]);
+
+        if (! $result->isAcknowledged()) {
+            throw new DocumentStorageFailedException();
+        }
     }
 
     public function search(DocumentSearch $search, int $offset = 0, int $limit = 100, string $sort = null, string $order = 'asc'): Documents
@@ -125,10 +130,16 @@ final class DocumentRepository implements DomainRepository
                 $mongoDocument->fileData->extension
             );
 
+            $updatedDate = $mongoDocument->updated ?? false
+                ? new DateTimeImmutable($mongoDocument->updated)
+                : null;
+
             $document = new Document(
                 DocumentId::fromString($mongoDocument->id),
                 $fileData,
-                $mongoDocument->meta->getArrayCopy()
+                $mongoDocument->meta->getArrayCopy(),
+                new DateTimeImmutable($mongoDocument->created),
+                $updatedDate
             );
 
             $documentCollection = $documentCollection->add($document);
