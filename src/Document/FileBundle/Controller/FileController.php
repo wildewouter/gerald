@@ -17,7 +17,7 @@ final class FileController extends Controller
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="Create a new document",
+     *  description="Download a new file",
      *  requirements={
      *      {
      *          "name"="fileName",
