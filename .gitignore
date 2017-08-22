@@ -12,6 +12,7 @@ composer.lock
 !/var/files/
 /var/files/*
 !/var/files/.gitkeep
+!/var/files/test.pdf
 !/var/logs
 /var/logs/*
 !var/logs/.gitkeep

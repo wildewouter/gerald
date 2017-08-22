@@ -2,7 +2,7 @@
 
 namespace Document\Domain;
 
-final class FileData implements Storable
+class FileData
 {
     /**
      * @var FileId

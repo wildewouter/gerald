@@ -4,7 +4,7 @@ namespace Document\Domain;
 
 use DateTimeImmutable;
 
-final class Document implements Storable
+final class Document
 {
     /**
      * @var DocumentId
