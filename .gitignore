@@ -5,6 +5,7 @@
 composer.lock
 .vagrant/
 .idea/
+/ansible/playbook.retry
 /var/*
 !/var/cache
 /var/cache/*

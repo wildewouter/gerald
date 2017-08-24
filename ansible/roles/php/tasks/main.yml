@@ -5,6 +5,7 @@
   apt: name=php{{ php.version }}-{{ item }} state=present
   with_items:
     - json
+    - curl
     - xml
     - mbstring
     - intl
