@@ -45,13 +45,12 @@ final class UpdateController extends Controller
 
         $meta = array_replace($document->meta(), $meta);
 
-        $id                 = $document->id();
         $documentRepository = $this->get('document.repository');
 
-        $documentRepository->delete($id, false);
+        $documentRepository->delete($document, false);
 
         $document = new Document(
-            $id,
+            $document->id(),
             $document->fileData(),
             $meta,
             $document->createdDate(),
