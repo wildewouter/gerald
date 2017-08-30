@@ -5,3 +5,6 @@
 - name: set locale
   lineinfile: dest=/etc/default/locale regexp='^LANG=' line='LANG={{ locale }}'
 
+- name: set timezone to Europe/Amsterdam
+  timezone:
+    name: Europe/Amsterdam
