@@ -22,13 +22,13 @@
 - name: Set higher max upload for FPM
   lineinfile:
     dest: /etc/php/{{ php.version }}/fpm/php.ini
-    regexp: "upload_max_filesize = 2M"
+    regexp: "upload_max_filesize = "
     line: "upload_max_filesize = 50M"
 
 - name: Set higher max post body for FPM
   lineinfile:
     dest: /etc/php/{{ php.version }}/fpm/php.ini
-    regexp: "post_max_size = 2M"
+    regexp: "post_max_size = "
     line: "post_max_size = 50M"
 
 - name: restart php-fpm
