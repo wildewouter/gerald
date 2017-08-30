@@ -9,7 +9,7 @@ parameters:
     database_name:     documents
     collection_name:   documents
 
-    storage_root:    /var/www/gerald/var/files
+    storage_root:    '%env(STORAGE_ROOT)%'
 
     mailer_transport: smtp
     mailer_host: 127.0.0.1
