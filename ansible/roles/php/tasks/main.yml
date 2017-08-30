@@ -19,5 +19,17 @@
 - name: install php{{ php.version }}-fpm
   apt: name=php{{ php.version }}-fpm state=present
 
+- name: Set higher max upload for FPM
+  lineinfile:
+    dest: /etc/php/{{ php.version }}/fpm/php.ini
+    regexp: "upload_max_filesize = 2M"
+    line: "upload_max_filesize = 50M"
+
+- name: Set higher max post body for FPM
+  lineinfile:
+    dest: /etc/php/{{ php.version }}/fpm/php.ini
+    regexp: "post_max_size = 2M"
+    line: "post_max_size = 50M"
+
 - name: restart php-fpm
   service: name=php{{ php.version }}-fpm state=restarted
